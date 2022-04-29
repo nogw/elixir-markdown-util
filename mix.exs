@@ -1,0 +1,28 @@
+defmodule UseMdAsDoc.MixProject do
+  use Mix.Project
+
+  def project do
+    [
+      app: :use_md_as_doc,
+      version: "0.1.0",
+      elixir: "~> 1.13",
+      start_permanent: Mix.env() == :prod,
+      deps: deps()
+    ]
+  end
+
+  def application do
+    [
+      extra_applications: [:logger],
+      mod: {UseMdAsDoc.Application, []}
+    ]
+  end
+
+  defp deps do
+    [
+      {:yaml_front_matter, "~> 0.3.0"},
+      {:ecto_sql, "~> 3.2"},
+      {:postgrex, "~> 0.15"}
+    ]
+  end
+end
