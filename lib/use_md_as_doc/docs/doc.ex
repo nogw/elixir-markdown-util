@@ -1,17 +1,21 @@
 defmodule UseMdAsDoc.Docs.Doc do
   use Ecto.Schema
+  import Ecto.Changeset
 
   @primary_key {:identifier, :string, autogenerate: false}
   schema "docs" do
-    field :index, :integer
     field :category, :string
     field :content, :string
+    field :index, :integer
     field :title, :string
+
+    timestamps()
   end
 
-  def changeset(doc, params \\ %{}) do
+  @doc false
+  def changeset(doc, attrs) do
     doc
-    |> Ecto.Changeset.cast(params, [:identifier, :index, :title, :category, :content])
-    |> Ecto.Changeset.validate_required([:identifier, :index, :title, :category, :content])
+    |> cast(attrs, [:identifier, :index, :category, :content, :title])
+    |> validate_required([:identifier, :index, :category, :content, :title])
   end
 end

@@ -1,7 +1,7 @@
 import Config
 
 config :use_md_as_doc, UseMdAsDoc.Repo,
-  database: "use_md_as_doc_repo",
+  database: "bark_dev",
   username: "postgres",
   password: "postgres",
   hostname: "localhost"

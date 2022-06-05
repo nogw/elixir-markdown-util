@@ -1,4 +1,4 @@
-defmodule UseMdAsDoc.Repo.Migrations.CreateDoc do
+defmodule UseMdAsDoc.Repo.Migrations.CreateDocs do
   use Ecto.Migration
 
   def change do
@@ -8,6 +8,8 @@ defmodule UseMdAsDoc.Repo.Migrations.CreateDoc do
       add :title, :string, null: false
       add :category, :string, null: false
       add :content, :text, null: false
+
+      timestamps()
     end
   end
 end
