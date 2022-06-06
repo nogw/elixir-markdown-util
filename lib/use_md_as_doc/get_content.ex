@@ -10,7 +10,6 @@ defmodule UseMdAsDoc.GetContent do
     %Doc{}
     |> Doc.changeset(attrs)
     |> IO.inspect()
-
     # |> Repo.insert()
   end
 
@@ -49,13 +48,4 @@ defmodule UseMdAsDoc.GetContent do
     |> Enum.map(fn file -> file |> YamlFrontMatter.parse_file() |> mapToKeyword() end)
     |> insertDocs()
   end
-
-  # IO.inspect(changesets)
-
-  # Repo.insert_all(
-  #   Doc,
-  #   changesets,
-  #   on_conflict: :replace_all,
-  #   conflict_target: :identifier
-  # )
 end
