@@ -24,3 +24,4 @@ use_md_as_doc-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+/docs/
