@@ -8,24 +8,34 @@ defmodule UseMdAsDoc.Docs do
     Repo.all(Doc)
   end
 
-  def aux([head | tail], acc) do
-    case head do
-      %{category: category, identifier: identifier, title: title} = _ ->
-        Map.fetch!(acc, category)
-        |> Enum.concat([%{identifier: identifier, title: title}])
-        |> (fn temp -> aux(tail, Map.replace(acc, category, temp)) end).()
-    end
-  end
+  # def aux([head | tail], acc) do
+  #   case head do
+  #     %{category: category, identifier: identifier, title: title} = _ ->
+  #       case Map.fetch(acc, category) do
+  #         {:ok, %{^category => list}} ->
+  #           %{acc | category => list |> Enum.concat([%{identifier: identifier, title: title}])}
+  #           |> (fn v -> aux(tail, v) end).()
+  #         _ ->
+  #           acc |> Map.put(category, [%{identifier: identifier, title: title}])
+  #           |> (fn v -> aux(tail, v) end).()
+  #       end
+  #   end
+  # end
 
-  def aux(_, acc), do: acc
+  def aux(docs) do
+    Enum.reduce(docs, %{}, fn %{category: category, identifier: identifier, title: title}, acc ->
+      case Map.fetch(acc, category) do
+        {:ok, list} -> %{acc | category => list |> Enum.concat([%{identifier: identifier, title: title}])}
+        _ -> Map.put(acc, category, [%{identifier: identifier, title: title}])
+      end
+    end)
+  end
 
   def organize do
     list_docs()
-    |> aux(%{})
+    |> aux()
     |> Enum.map(fn {c, t} -> %{category: c, tabs: t} end)
   end
-
-  # def get_doc!(identifier), do: Repo.get!(Doc, identifier)
 
   def create_doc(attrs \\ %{}) do
     %Doc{}
