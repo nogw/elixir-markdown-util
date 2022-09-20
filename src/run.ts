@@ -6,5 +6,6 @@ config();
 
 (async () => {
   await connectDatabase();
-  await insertAllDocs(await getAllDocs());
+  const docs = await getAllDocs();
+  await insertAllDocs(docs);
 })();
