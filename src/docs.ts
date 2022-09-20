@@ -1,10 +1,10 @@
-import * as fs from "fs";
-import * as path from "path";
-import * as matter from "gray-matter";
-import { DocDocument, DocModel } from "./model";
+import * as fs from 'fs';
+import * as path from 'path';
+import * as matter from 'gray-matter';
+import { DocDocument, DocModel } from './model';
 
 export const getAllDocs = () => {
-  const docs = fs.readdirSync(path.resolve("./docs"));
+  const docs = fs.readdirSync(path.resolve('./docs'));
   const mdDocs: matter.GrayMatterFile<string>[] = [];
 
   for (let k = 0; k < docs.length; k++) {
@@ -25,17 +25,13 @@ export const insertAllDocs = async (docs: matter.GrayMatterFile<string>[]) => {
       category,
       title,
       index,
-      content: docs[k].content
+      content: docs[k].content,
     };
 
     const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
-    await DocModel.findOneAndUpdate(
-      { identifier: identifier },
-      update,
-      options
-    );
+    await DocModel.findOneAndUpdate({ identifier: identifier }, update, options);
   }
 
-  console.log("updated!");
+  console.log('updated!');
 };
