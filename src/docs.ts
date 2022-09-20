@@ -1,22 +1,23 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as matter from 'gray-matter';
-import { DocDocument, DocModel } from './model';
+import { DocModel } from './model';
 
-export const getAllDocs = () => {
-  const docs = fs.readdirSync(path.resolve('./docs'));
-  const mdDocs: matter.GrayMatterFile<string>[] = [];
+type matterDoc = matter.GrayMatterFile<string>[];
+
+export const getAllDocs = async () => {
+  const docs = await fs.promises.readdir(path.resolve('./docs'));
+  const mdDocs: matterDoc = [];
 
   for (let k = 0; k < docs.length; k++) {
     const doc = path.resolve(`./docs/${docs[k]}`);
-    const mdDoc = matter.read(doc);
-    mdDocs.push(mdDoc);
+    mdDocs.push(matter.read(doc));
   }
 
   return mdDocs;
 };
 
-export const insertAllDocs = async (docs: matter.GrayMatterFile<string>[]) => {
+export const insertAllDocs = async (docs: matterDoc) => {
   for (let k = 0; k < docs.length; k++) {
     const { identifier, category, title, index } = docs[k].data;
 

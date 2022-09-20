@@ -3,8 +3,8 @@ import { connectDatabase } from './database';
 import { config } from 'dotenv';
 
 config();
-connectDatabase();
 
-const run = async () => await insertAllDocs(getAllDocs());
-
-run();
+(async () => {
+  await connectDatabase();
+  await insertAllDocs(await getAllDocs());
+})();
